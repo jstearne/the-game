@@ -1,0 +1,17 @@
+body{
+    background-image: url("https://unblast.com/wp-content/uploads/2021/01/Space-Background-Images.jpg");
+    background-size: cover;
+    }
+#player_ship {
+        height: 50px;
+        position:absolute;
+        top:90%;
+        left:50%;
+}
+.enemy { /* this flips enemy upside down because I think it looks cooler that way */
+    transform: scaleY(-1);
+    height: 120px;
+    position:absolute;
+    top:10%;
+    left:50%;
+}

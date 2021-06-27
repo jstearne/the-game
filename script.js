@@ -1,31 +1,11 @@
 console.log("Sanity check!");
-// use javascript to either MAKE enemies, or create them with divs manually
 // once accounted for, spread them randomly (random? or manually)
 // Then run animate() to get them doing all sorts of stuff. CSS?
 
-
-
-
-
-/*
-const $Bgy = $('.enemy'); // define jQuery enemy
-
-$Bgy.animate({
-    marginTop: "+=1000px",
-}, 1000);
-
-
-*/
-
-
-// $Bgy.slideDown(4000); NOT working
 /*
 Galaga/R-Type shooter (hold off on actual shooting for now)
 
-***What variables and functions do I need?***
-
-Player Movement Function = movePlayerShip()
-
+>>>> https://jstearne.github.io/the-game/ <<<<
 
 */
 // PLAYER MOVEMENT (complete!)

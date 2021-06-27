@@ -3,11 +3,20 @@ console.log("Sanity check!");
 // once accounted for, spread them randomly (random? or manually)
 // Then run animate() to get them doing all sorts of stuff. CSS?
 
+
+
+
+
+/*
 const $Bgy = $('.enemy'); // define jQuery enemy
 
 $Bgy.animate({
     marginTop: "+=1000px",
 }, 1000);
+
+
+*/
+
 
 // $Bgy.slideDown(4000); NOT working
 /*
@@ -51,12 +60,89 @@ $(document).keyup(function(e) {
 
 
 
-
 // ENEMY DISPLAY AND MOVEMENT
-// one function to create enemy info (array). One function to show those enemies on screen. One function to move?
 
+const $Box = $('#box'); // this is the <box> parent, which holds class=enemy <divs>
+const $Div = $('.enemy'); // this is actually grabbing an existing div tag
+let enemyArray = [];
 
+// ****TODAY**** Try to get multiple enemies to appear separately. They overlap or only one
 
+function startGame() {
+    for (i = 0; i < 10; i++){
+        enemyArray.push(i); // each loop, create object in array
+        console.log(enemyArray); // check that array is growing
+    }
+    enemyArray.forEach((element, index) => {
 
+        let $bogey = $(`<div id='divBaddie_${index}'>`);
+        let $img = $(`<img id='divBaddie_${index}'>`);
+        $img.attr('src', 'https://www.seekpng.com/png/full/399-3995261_futuristic-spaceship-png-download-alien-space-ship-sprites.png')
+        $img.addClass("enemy"); // also add border
+
+        $bogey.append($img); // adds <img> to <div>
+        $Box.append($bogey); // adds <div> to <box>
+        $Div.css({"left": Math.random() * window.outerWidth}); // this actually works, but still just one
+        $Div.animate({top: 1250}, 1000),  
+        console.log($bogey, $img);
+    })  
+}; // object.attr('src', '...')...object.addClass("classname")
+
+startGame();
+// create a div tag and an img tag within it, and append it to the <box>
 
 // END ENEMY DISPLAY AND MOVEMENT
+
+/* CURRENT PROBLEMS
+1. Create multiple enemies dynamically (will need too many for manual input and I don't want to overlaod memory - 3-4 at a time)
+2. Randomize their horizontal position on screen
+3. Collision detection (crash, end game)
+
+USE ANIMATION FOR COLLISIONS AND APPEARING. NOT FOR STD ENEMY MOVEMENT 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+REJECTED ATTEMPT: creating class Bogey - just does NOT do anything
+
+var Bogey = function(x, y, size, speed) {
+    this.x = x;
+    this.y = y;
+    this.size = size;
+    this.speed = speed;
+    this.update = function() {
+        fill(255,0,0)
+        ellipse(this.x, this.y, this.size, this.speed);
+    };
+};
+
+
+var bogey = new Bogey(100, 170, 41, 5); // this is an instance of class Bogey
+// draw function is BUILT IN. That's what I was missing!
+
+draw = function() {
+    bogey.update();
+}
+
+
+
+
+
+*/

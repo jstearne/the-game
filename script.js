@@ -1,5 +1,4 @@
 console.log("Sanity check!");
-collisionDetection()
 /*
 Galaga/R-Type shooter (hold off on actual shooting for now)
 Dodge enemies as they approach, survive long enough to win!
@@ -54,7 +53,6 @@ const $Div = $('.bogey'); // all enemies (class)
 function startGame() {  // calls game loop, also initalizes game start
     // show READY alert H1 blinking, then START! Then run gameLoop?
     for (i = 0; i < 100; i++) {
-        collisionDetection();
         gameLoop(Math.floor(Math.random() * 10)); // calls a random ship
     }
 }
@@ -74,16 +72,16 @@ function gameLoop(i) { // core gameplay - avoid the random enemies!
 
 
 // COLLISION DETECTION
-// Can't get this code to work at all. 
+// Can't get this code to work no matter where I call it. What's missing/wrong?
 function collisionDetection() { // can I track x/y of a whole class in one variable? If not, make more!
-    let playerLocationX = $("#player_ship").offset().left;
-    let playerLocationY = $("#player_ship").offset().top;
+    let playerLocationX = $("#player_ship").offset().left; // this tracks player location
+    let playerLocationY = $("#player_ship").offset().top; 
     let playerHeight = $("#player_ship").height(100);
     let playerWidth = $("#player_ship").width(100);
     let bogeyX = $("#enemy_5").offset().left;
     let bogeyY = $("#enemy_5").offset().top;
-    let bogeyHeight = $(".bogey").height(100);
-    let bogeyWidth = $(".bogey").width(100);
+    let bogeyHeight = $("#enemy_5").height(200);
+    let bogeyWidth = $("#enemy_5").width(200);
     if (playerLocationY < bogeyY + bogeyHeight && playerLocationX + playerWidth > bogeyX && playerLocationY < bogeyY + bogeyHeight && playerHeight + playerLocationY > bogeyY) { // test if bogey ever is on same Y axis with player, should fire quick
         console.log("You just crashed!"); 
     }
@@ -108,7 +106,9 @@ Solve the smallest possible problem at a time. Never get complex.
 2. make 2 bogeys move DONE!
 3. make bogeys move in different loops DONE!
 4. make bogeys repeat (off screen, loop up to top) DONE!
-5 physics - collisions and death state ***HARDEST ONE***
+5 physics - collisions and death state ***HARDEST ONE COME BACK TO ME***
+
+Knock these out!!
 6. fine tuning
 7. interface
 8. score keeping
@@ -126,7 +126,7 @@ startGame();
 
 
 
-    /*
+    /* ***** SAVE FOR ANOTHER TIME *****
     for (i = 0; i < 10; i++){
         enemyArray.push(i); // each loop, create object in array
         console.log(enemyArray); // check that array is growing

@@ -1,9 +1,8 @@
 console.log("Sanity check!");
-// once accounted for, spread them randomly (random? or manually)
-// Then run animate() to get them doing all sorts of stuff. CSS?
-
+collisionDetection()
 /*
 Galaga/R-Type shooter (hold off on actual shooting for now)
+Dodge enemies as they approach, survive long enough to win!
 
 >>>> https://jstearne.github.io/the-game/ <<<<
 
@@ -13,16 +12,20 @@ function movePlayerShip() {
     for (let direction in keys) {
         if (!keys.hasOwnProperty(direction)) continue; // if a direction key is pressed, run code. Else, null
         if (direction == 37) { // '37-40' = direction keys!
-            $("#player_ship").animate({left: "-=5"}, 0);               
+            $("#player_ship").animate({left: "-=5"}, 0);
+            console.log( $("#player_ship").offset() );             
         }
         if (direction == 38) {
-            $("#player_ship").animate({top: "-=5"}, 0);  
+            $("#player_ship").animate({top: "-=5"}, 0);
+            console.log( $("#player_ship").offset() );
         }
         if (direction == 39) {
-            $("#player_ship").animate({left: "+=5"}, 0);  
+            $("#player_ship").animate({left: "+=5"}, 0);
+            console.log( $("#player_ship").offset() ); 
         }
         if (direction == 40) {
-            $("#player_ship").animate({top: "+=5"}, 0);  
+            $("#player_ship").animate({top: "+=5"}, 0);
+            console.log( $("#player_ship").offset() );
         }
     }
 }
@@ -47,39 +50,54 @@ $(document).keyup(function(e) {
 
 const $Box = $('.container'); // class grid (layout for enemy)
 const $Div = $('.bogey'); // all enemies (class)
-// let enemyArray = []; NO LONGER NEEDED
-function startGame() { 
+
+function startGame() {  // calls game loop, also initalizes game start
     // show READY alert H1 blinking, then START! Then run gameLoop?
     for (i = 0; i < 100; i++) {
+        collisionDetection();
         gameLoop(Math.floor(Math.random() * 10)); // calls a random ship
     }
 }
     
-    function gameLoop(i) {
-        setTimeout(function() {
-            $( `#enemy_${i}` ).animate({top: 1250}, Math.floor(Math.random() * 5000)); // random enemies! I'm getting CLOSE.
-            $( `#enemy_${i}` ).fadeOut(10);
-            $( `#enemy_${i}` ).animate({top: -1250}, 1000);
-            $( `#enemy_${i}` ).fadeIn(10);
-            if (--i) myLoop(i);   //  decrement i and call myLoop again if i > 0
-            }, 3000)
-        }(10);     
-    
-    //    $( `#enemy_${i}` ).animate({top: 1250}, 1200);
-    //    $( `#enemy_${i}` ).fadeOut(100);
+function gameLoop(i) { // core gameplay - avoid the random enemies!
+    setTimeout(function() {
+        $( `#enemy_${i}` ).animate({top: 1250}, Math.floor(Math.random() * 5000)); // random enemies! I'm getting CLOSE.
+        $( `#enemy_${i}` ).fadeOut(1);
+        $( `#enemy_${i}` ).animate({top: -1250}, 1000);
+        $( `#enemy_${i}` ).fadeIn(1);
+        if (--i) gameLoop(i);   //  decrement i and call myLoop again if i > 0
+        }, 3000)
+}(10);     
 
-    //    $( `#enemy_${i}` ).fadeIn(100);
-    //    $( `#enemy_${i}` ).animate({top: 1250}, 1200);
-        // go invisible, return to start
-
-// *** trying to get one code to run, wait, then run next loop. But they all fire at once.
-    //$( "#enemy_0" ).animate({top: 1250}, 1000);
+// END ENEMY DISPLAY AND MOVEMENT
 
 
-    //$Div.css({"left": Math.floor(Math.random()*100)}); // this actually works, but still just one
-    //$Div.animate({top: 1250}, 1000);
 
-//     let i = Math.floor(Math.random() * 10); // call a div (enemy_1) and have it work over and over (just the one)
+// COLLISION DETECTION
+// Can't get this code to work at all. 
+function collisionDetection() { // can I track x/y of a whole class in one variable? If not, make more!
+    let playerLocationX = $("#player_ship").offset().left;
+    let playerLocationY = $("#player_ship").offset().top;
+    let playerHeight = $("#player_ship").height(100);
+    let playerWidth = $("#player_ship").width(100);
+    let bogeyX = $("#enemy_5").offset().left;
+    let bogeyY = $("#enemy_5").offset().top;
+    let bogeyHeight = $(".bogey").height(100);
+    let bogeyWidth = $(".bogey").width(100);
+    if (playerLocationY < bogeyY + bogeyHeight && playerLocationX + playerWidth > bogeyX && playerLocationY < bogeyY + bogeyHeight && playerHeight + playerLocationY > bogeyY) { // test if bogey ever is on same Y axis with player, should fire quick
+        console.log("You just crashed!"); 
+    }
+}
+
+
+
+
+
+// END COLLISION DETECTION
+
+
+
+
 
 /* NEW PLAN
 Make 'dumb' HTML and just make those ships move downscreen.
@@ -88,25 +106,17 @@ Solve the smallest possible problem at a time. Never get complex.
 0. make more than one bogey appear DONE!
 1. make a bogey move DONE!
 2. make 2 bogeys move DONE!
-3. make bogeys move in different loops  DONE!
+3. make bogeys move in different loops DONE!
 4. make bogeys repeat (off screen, loop up to top) DONE!
-5 physics - collisions and death state
+5 physics - collisions and death state ***HARDEST ONE***
 6. fine tuning
 7. interface
 8. score keeping
 9. animations!
 
-
 */
 
-
-
-
-
-
-
-
-
+startGame();
 
 
 
@@ -135,23 +145,4 @@ Solve the smallest possible problem at a time. Never get complex.
         $Div.animate({top: 1250}, 1000),  
         console.log($bogey, $img);
     })  */
-startGame();
 
-
-
-
-
-// create a div tag and an img tag within it, and append it to the <box>
-
-// END ENEMY DISPLAY AND MOVEMENT
-
-/* CURRENT PROBLEMS
-1. Create multiple enemies dynamically (will need too many for manual input and I don't want to overlaod memory - 3-4 at a time)
-2. Randomize their horizontal position on screen
-3. Collision detection (crash, end game)
-
-USE ANIMATION FOR COLLISIONS AND APPEARING. NOT FOR STD ENEMY MOVEMENT 
-
-
-
-*/

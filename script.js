@@ -45,14 +45,78 @@ $(document).keyup(function(e) {
 
 // **** TO DO: make more than two ships appear at once! ****
 
-const $Box = $('#box'); // this is the <box> parent, which holds class=enemy <divs>
-const $Div = $('.enemy'); // this is actually grabbing an existing div tag
-let enemyArray = [];
+const $Box = $('.container'); // class grid (layout for enemy)
+const $Div = $('.bogey'); // all enemies (class)
+// let enemyArray = []; NO LONGER NEEDED
+function startGame() { 
+    // show READY alert H1 blinking, then START! Then run gameLoop?
+    for (i = 0; i < 100; i++) {
+        gameLoop(Math.floor(Math.random() * 10)); // calls a random ship
+    }
+}
+    
+    function gameLoop(i) {
+        setTimeout(function() {
+            $( `#enemy_${i}` ).animate({top: 1250}, Math.floor(Math.random() * 5000)); // random enemies! I'm getting CLOSE.
+            $( `#enemy_${i}` ).fadeOut(10);
+            $( `#enemy_${i}` ).animate({top: -1250}, 1000);
+            $( `#enemy_${i}` ).fadeIn(10);
+            if (--i) myLoop(i);   //  decrement i and call myLoop again if i > 0
+            }, 3000)
+        }(10);     
+    
+    //    $( `#enemy_${i}` ).animate({top: 1250}, 1200);
+    //    $( `#enemy_${i}` ).fadeOut(100);
 
-// ****TODAY**** alternative since this isn't working: populate 100+ <div> in HTML, set them all off screen (up), and have them come one by one on a timer (loop?)
-// AKA for all <class badguy div>, animate one CSS, wait random(seconds), send another, loop
+    //    $( `#enemy_${i}` ).fadeIn(100);
+    //    $( `#enemy_${i}` ).animate({top: 1250}, 1200);
+        // go invisible, return to start
 
-function startGame() {
+// *** trying to get one code to run, wait, then run next loop. But they all fire at once.
+    //$( "#enemy_0" ).animate({top: 1250}, 1000);
+
+
+    //$Div.css({"left": Math.floor(Math.random()*100)}); // this actually works, but still just one
+    //$Div.animate({top: 1250}, 1000);
+
+//     let i = Math.floor(Math.random() * 10); // call a div (enemy_1) and have it work over and over (just the one)
+
+/* NEW PLAN
+Make 'dumb' HTML and just make those ships move downscreen.
+Solve the smallest possible problem at a time. Never get complex.
+
+0. make more than one bogey appear DONE!
+1. make a bogey move DONE!
+2. make 2 bogeys move DONE!
+3. make bogeys move in different loops  DONE!
+4. make bogeys repeat (off screen, loop up to top) DONE!
+5 physics - collisions and death state
+6. fine tuning
+7. interface
+8. score keeping
+9. animations!
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
     for (i = 0; i < 10; i++){
         enemyArray.push(i); // each loop, create object in array
         console.log(enemyArray); // check that array is growing
@@ -66,14 +130,17 @@ function startGame() {
         
         $bogey.append($img); // adds <img> to <div>
         $Box.append($bogey); // adds <div> to <box>
-        
+        // $Div is the enemy class I have in HTML already. NOT the new divBaddies!
         $Div.css({"left": Math.floor(Math.random()*100)}); // this actually works, but still just one
         $Div.animate({top: 1250}, 1000),  
         console.log($bogey, $img);
-    })  // Math.floor(Math.random()*1000), Math.floor(1) * Math.random() * window.outerWidth
-}; // object.attr('src', '...')...object.addClass("classname")
-
+    })  */
 startGame();
+
+
+
+
+
 // create a div tag and an img tag within it, and append it to the <box>
 
 // END ENEMY DISPLAY AND MOVEMENT

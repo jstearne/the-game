@@ -12,19 +12,19 @@ function movePlayerShip() {
         if (!keys.hasOwnProperty(direction)) continue; // if a direction key is pressed, run code. Else, null
         if (direction == 37) { // '37-40' = direction keys!
             $("#player_ship").animate({left: "-=5"}, 0);
-            console.log( $("#player_ship").offset() );             
+        //    console.log( $("#player_ship").offset() );             
         }
         if (direction == 38) {
             $("#player_ship").animate({top: "-=5"}, 0);
-            console.log( $("#player_ship").offset() );
+        //    console.log( $("#player_ship").offset() );
         }
         if (direction == 39) {
             $("#player_ship").animate({left: "+=5"}, 0);
-            console.log( $("#player_ship").offset() ); 
+        //    console.log( $("#player_ship").offset() ); 
         }
         if (direction == 40) {
             $("#player_ship").animate({top: "+=5"}, 0);
-            console.log( $("#player_ship").offset() );
+        //    console.log( $("#player_ship").offset() );
         }
     }
 }
@@ -33,7 +33,6 @@ let keys = {} // store directional movements
 $(document).keydown(function(e) { // keydown() - when a certain key is pressed and held down...
     keys[e.keyCode] = true; // keyCode is depreceated but still works. Try to update if possible (low priority)
 });
-
 $(document).keyup(function(e) {
     delete keys[e.keyCode]; // depreceated
 });
@@ -50,21 +49,24 @@ $(document).keyup(function(e) {
 const $Box = $('.container'); // class grid (layout for enemy)
 const $Div = $('.bogey'); // all enemies (class)
 
-function startGame() {  // calls game loop, also initalizes game start
-    // show READY alert H1 blinking, then START! Then run gameLoop?
+function startGame() {  // calls game loop, also initalizes game star
+    $(`h1`).fadeOut(5000);
     for (i = 0; i < 100; i++) {
         gameLoop(Math.floor(Math.random() * 10)); // calls a random ship
+
     }
+    // collisionDetection();
 }
     
 function gameLoop(i) { // core gameplay - avoid the random enemies!
     setTimeout(function() {
-        $( `#enemy_${i}` ).animate({top: 1250}, Math.floor(Math.random() * 5000)); // random enemies! I'm getting CLOSE.
-        $( `#enemy_${i}` ).fadeOut(1);
-        $( `#enemy_${i}` ).animate({top: -1250}, 1000);
+        $( `#enemy_${i}` ).fadeIn(1);
+        $( `#enemy_${i}` ).animate({top: 1400}, Math.floor(Math.random() * 5000)); // random enemies!
+        $( `#enemy_${i}` ).fadeOut(200);
+        $( `#enemy_${i}` ).animate({top: -1400}, 1000);
         $( `#enemy_${i}` ).fadeIn(1);
         if (--i) gameLoop(i);   //  decrement i and call myLoop again if i > 0
-        }, 3000)
+        }, 5000) // 5 seconds till start
 }(10);     
 
 // END ENEMY DISPLAY AND MOVEMENT
@@ -72,8 +74,9 @@ function gameLoop(i) { // core gameplay - avoid the random enemies!
 
 
 // COLLISION DETECTION
-// Can't get this code to work no matter where I call it. What's missing/wrong?
+/*
 function collisionDetection() { // can I track x/y of a whole class in one variable? If not, make more!
+    console.log("Hello! Inside collision!");
     let playerLocationX = $("#player_ship").offset().left; // this tracks player location
     let playerLocationY = $("#player_ship").offset().top; 
     let playerHeight = $("#player_ship").height(100);
@@ -82,14 +85,18 @@ function collisionDetection() { // can I track x/y of a whole class in one varia
     let bogeyY = $("#enemy_5").offset().top;
     let bogeyHeight = $("#enemy_5").height(200);
     let bogeyWidth = $("#enemy_5").width(200);
-    if (playerLocationY < bogeyY + bogeyHeight && playerLocationX + playerWidth > bogeyX && playerLocationY < bogeyY + bogeyHeight && playerHeight + playerLocationY > bogeyY) { // test if bogey ever is on same Y axis with player, should fire quick
+    if (playerLocationY > bogeyY + bogeyHeight || 
+        playerLocationX + playerWidth < bogeyX || 
+        playerLocationY > bogeyY + bogeyHeight || 
+        playerHeight + playerLocationY < bogeyY || 
+        playerLocationX > bogeyWidth + bogeyX ) { // test if bogey ever is on same Y axis with player, should fire quick
         console.log("You just crashed!"); 
+    } else {
+        console.log("ELSE!");
     }
 }
 
-
-
-
+*/
 
 // END COLLISION DETECTION
 
@@ -126,7 +133,7 @@ startGame();
 
 
 
-    /* ***** SAVE FOR ANOTHER TIME *****
+    /* ***** SAVE FOR ANOTHER TIME*****
     for (i = 0; i < 10; i++){
         enemyArray.push(i); // each loop, create object in array
         console.log(enemyArray); // check that array is growing

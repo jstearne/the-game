@@ -1,8 +1,9 @@
-/* ADD BACK AT END. UNTIL THEN WHITE SCREEN IS EASIER
-body{
+
+body {
     background-image: url("https://unblast.com/wp-content/uploads/2021/01/Space-Background-Images.jpg");
     background-size: 150%;
-    }*/
+    overflow: hidden;
+}
 #player_ship {
         height: 100px;
         width: 100px;
@@ -22,4 +23,12 @@ body{
     grid-gap: 10px;
     padding: 10px;
     height: 100px;
-  }
+    top: -50px;
+    overflow: hidden;
+}
+h1 {
+    font-size: 200px;
+    color:white;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+}

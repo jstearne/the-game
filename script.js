@@ -42,10 +42,6 @@ $(document).keyup(function(e) {
 
 
 // ENEMY DISPLAY AND MOVEMENT
-
-
-// **** TO DO: make more than two ships appear at once! ****
-
 const $Box = $('.container'); // class grid (layout for enemy)
 const $Div = $('.bogey'); // all enemies (class)
 
@@ -70,6 +66,32 @@ function gameLoop(i) { // core gameplay - avoid the random enemies!
 }(10);     
 
 // END ENEMY DISPLAY AND MOVEMENT
+
+
+
+// TIMER/SCORE FUNCTION
+
+function startTimer(duration, display) {
+    var timer = duration, seconds;
+    setInterval(function () {
+        seconds = parseInt(timer % 250);
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        display.textContent = seconds;
+        if (--timer < 0) { // timer = duration;
+            alert("You Win! But can you make it even further...?");
+            startGame();
+            timer = 200;
+        }
+    }, 1000);
+}
+window.onload = function () {
+    let seconds = 155,
+        display = document.querySelector('#time');
+    startTimer(seconds, display);
+};
+// END TIMER/SCORE FUNCTION
+
+
 
 
 

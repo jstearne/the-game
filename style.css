@@ -14,7 +14,7 @@ body {
 .bogey { /* this flips enemy upside down because I think it looks cooler that way */
     transform: scaleY(-1);
     height: 120px;
-    width: 120px;
+    width: 200px;
     position: absolute;
 }
 .container {
@@ -30,5 +30,9 @@ h1 {
     font-size: 200px;
     color:white;
     text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+h2 {
+    color: white;
     font-family: 'Courier New', Courier, monospace;
 }
